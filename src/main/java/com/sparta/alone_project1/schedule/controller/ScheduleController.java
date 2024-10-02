@@ -5,6 +5,7 @@ import com.sparta.alone_project1.schedule.dto.ScheduleResponseDto;
 import com.sparta.alone_project1.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
@@ -39,4 +40,10 @@ public class ScheduleController {
 
         return scheduleService.pageSchedule(page,size);
     }
+
+    @DeleteMapping("/{scheduleId}")
+    public void deleteSchedule(@PathVariable Long scheduleId) {
+        scheduleService.deleteSchedule(scheduleId);
+    }
+
 }

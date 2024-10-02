@@ -22,12 +22,11 @@ public class CommentService {
     public CommentResponseDto creatComment(Long scheduleId, CommentRequestDto commentRequestDto) {
 
        Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(()->new IllegalArgumentException("스케쥴 아이디가 존재하지 않습니다."));
+                .orElseThrow(()->new RuntimeException("스케쥴 존재 여부 X"));
 
         Comment comment = new Comment(commentRequestDto,schedule);
 
         return new CommentResponseDto(comment);
-
     }
 
     public CommentResponseDto inquiryComment(Long scheduleId, Long commentId) {
