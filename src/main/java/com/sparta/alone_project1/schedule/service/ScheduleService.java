@@ -27,7 +27,6 @@ public class ScheduleService {
     }
 
     public ScheduleResponseDto inquirySchedule(Long scheduleId) {
-
        Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(()->new IllegalArgumentException("스케쥴 아이디가 존재하지 않습니다"));
 
@@ -54,5 +53,14 @@ public class ScheduleService {
        Page<ScheduleResponseDto> scheduleResponseDtos = pagedSchedule.map(schedule -> new ScheduleResponseDto(schedule));
 
        return scheduleResponseDtos;
+    }
+
+
+    public void deleteSchedule(Long scheduleId) {
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(()->new IllegalArgumentException("스케쥴 아이디가 존재하지 않습니다"));
+
+        scheduleRepository.delete(schedule);
+
     }
 }
