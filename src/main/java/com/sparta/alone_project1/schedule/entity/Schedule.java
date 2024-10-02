@@ -1,13 +1,13 @@
 package com.sparta.alone_project1.schedule.entity;
 
+import com.sparta.alone_project1.comment.entity.Comment;
 import com.sparta.alone_project1.config.TimeStamp;
 import com.sparta.alone_project1.schedule.dto.ScheduleRequestDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,4 +34,7 @@ public class Schedule extends TimeStamp {
         this.title = scheduleRequestDto.getTitle();
         this.content = scheduleRequestDto.getContent();
     }
+
+    @OneToMany(mappedBy = "schedule",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Comment> commentList;
 }
