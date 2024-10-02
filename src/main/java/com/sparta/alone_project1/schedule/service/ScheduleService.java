@@ -5,6 +5,9 @@ import com.sparta.alone_project1.schedule.dto.ScheduleResponseDto;
 import com.sparta.alone_project1.schedule.entity.Schedule;
 import com.sparta.alone_project1.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,5 +43,16 @@ public class ScheduleService {
        foundSchedule.updateSchedule(scheduleRequestDto);
 
        return new ScheduleResponseDto(foundSchedule);
+    }
+
+    public Page<ScheduleResponseDto> pageSchedule(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page -1,size);
+
+        Page<Schedule> pagedSchedule = scheduleRepository.findAllByOrderByModifiedAtDesc(pageable);
+
+       Page<ScheduleResponseDto> scheduleResponseDtos = pagedSchedule.map(schedule -> new ScheduleResponseDto(schedule));
+
+       return scheduleResponseDtos;
     }
 }
